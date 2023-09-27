@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Tests">
+    <test name="All Test Suite">
+        <classes>
+            <class name="divaeva.testNG.hw.RegistrationNewUserTesting" />
+        </classes>
+    </test>
+</suite>
