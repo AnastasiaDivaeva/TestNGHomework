@@ -3,7 +3,9 @@
 <suite name="All Tests">
     <test name="All Test Suite">
         <classes>
-            <class name="divaeva.testNG.hw.RegistrationNewUserTesting" />
+            <class name="divaeva.testNG.hw.RegistrationNewUserTest" />
+            <class name="divaeva.testNG.hw.CartTest" />
+            <class name="divaeva.testNG.hw.PriceFilterTest" />
         </classes>
     </test>
 </suite>
