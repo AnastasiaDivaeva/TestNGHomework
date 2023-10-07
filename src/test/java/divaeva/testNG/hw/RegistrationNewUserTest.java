@@ -12,7 +12,7 @@ public class RegistrationNewUserTest extends BaseTest {
     private final By REGISTRATION_BUTTON_ON_HOME_PAGE = By.xpath("//rz-user[@class='header-actions__component']" +
             "//button[@class='header__button ng-star-inserted']");
     private final By REGISTER_BUTTON = By.xpath("//button[text()=' Зареєструватися ']");
-    private final By EMPTY_REGISTRATION_FORM_FIELDS = By.xpath("//div[contains(@class,'type_error')]");
+    private final By FORM_FIELDS_VALIDATION_ERRORS = By.xpath("//div[contains(@class,'type_error')]");
     private final By VALIDATION_ERROR_MESSAGES = By.xpath("//p[@class='validation-message ng-star-inserted']");
     private final By REGISTRATION_CONFIRMATION_PAGE = By.xpath("//div[@class='auth-modal']");
     private final By NAME_FIELD = By.cssSelector("[id='registerUserName']");
@@ -28,6 +28,9 @@ public class RegistrationNewUserTest extends BaseTest {
     @Test(groups = "positive")
     public void registrationWithCyrillicFilledFields() {
         fillInRegistrationInfo("Лера", "Секач", PHONE_NUMBER_FIELD_VALUE, EMAIL_FIELD_VALUE, PASSWORD_FIELD_VALUE);
+
+        List<WebElement> formFieldsValidationErrors = driver.findElements(FORM_FIELDS_VALIDATION_ERRORS);
+        Assert.assertTrue(formFieldsValidationErrors.isEmpty());
 
         WebElement registrationConfirmationPage = driver.findElement(REGISTRATION_CONFIRMATION_PAGE);
         Assert.assertTrue(registrationConfirmationPage.isDisplayed(), "Registration was successful.");
@@ -62,9 +65,8 @@ public class RegistrationNewUserTest extends BaseTest {
         wait.until(ExpectedConditions.visibilityOfElementLocated(REGISTER_BUTTON)).click();
         driver.findElement(REGISTER_BUTTON).click();
 
-        List<WebElement> emptyFormFields = driver.findElements(EMPTY_REGISTRATION_FORM_FIELDS);
-        boolean isEmptyFieldsPresent = !emptyFormFields.isEmpty();
-        Assert.assertTrue(isEmptyFieldsPresent, "Registration with empty fields should fail.");
+        List<WebElement> formFieldsValidationErrors = driver.findElements(FORM_FIELDS_VALIDATION_ERRORS);
+        Assert.assertEquals(formFieldsValidationErrors.size(), 5);
     }
 
     private void fillInRegistrationInfo(String name, String surname, String phoneNumber, String email, String password) {
